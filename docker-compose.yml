@@ -1,0 +1,60 @@
+# docker-compose.yml 
+services:
+  db:
+    image: mariadb:10.11
+    container_name: mediawiki_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u\"${MYSQL_USER}\" -p\"${MYSQL_PASSWORD}\" || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  mediawiki:
+    image: mediawiki:1.41
+    container_name: mediawiki_app
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "${HOST_HTTP_PORT:-8080}:80"
+    environment:
+      MW_DB_HOST: "db"
+      MW_DB_NAME: "${MYSQL_DATABASE}"
+      MW_DB_USER: "${MYSQL_USER}"
+      MW_DB_PASSWORD: "${MYSQL_PASSWORD}"
+      MW_SERVER: "${MW_SERVER:-http://server-03-vm:8080}"
+      MW_MAX_UPLOAD_SIZE: "${MW_MAX_UPLOAD_SIZE:-10485760}"
+    volumes:
+      - /mnt/host-mediawiki-backups/docker/images:/var/www/html/images:rw
+      - /mnt/host-mediawiki-backups/docker/localsettings/LocalSettings.php:/var/www/html/LocalSettings.php:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+volumes:
+  db_data:
+   name: mediawiki_db_data
+   external: true
+

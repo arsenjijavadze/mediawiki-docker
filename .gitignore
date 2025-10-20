@@ -1,0 +1,22 @@
+# Local env and secrets
+.env
+
+# Local config/backups we never commit
+backups_config/
+localsettings/LocalSettings.php
+
+# host backup folders (do not commit dumps/backups)
+docker/dumps/
+docker/backups/
+mnt/host-mediawiki-backups/docker/dumps/
+mnt/host-mediawiki-backups/docker/backups/
+
+# archives and large files
+/home/arsadmin/archives/
+*.sql
+*.sql.gz
+*.tar.gz
+
+# editor / IDE
+.vscode/
+.idea/
