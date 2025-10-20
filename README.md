@@ -55,6 +55,4 @@ Recommended for personal or development use
 
 
 MIT License © 2025 Arsen Jijavadze
-```
-```
-```
+
