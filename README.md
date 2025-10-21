@@ -5,13 +5,17 @@ Includes MySQL, MediaWiki, and simple configuration templates for clean, reprodu
 
 ---
 ##  Structure
+```bash
+```
 mediawiki-docker/
 ├── docker-compose.yml
 ├── .env.example
 ├── localsettings/
 │ └── LocalSettings.php.template
 └── backups_config/
+```
 
+```
 --
 
 ## 🚀 Quick Start
