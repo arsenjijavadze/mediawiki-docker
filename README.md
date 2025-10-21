@@ -14,7 +14,7 @@ mediawiki-docker/
 
 --
 
-## 🚀 Quick Start
+## Quick Start
 
 1. Copy `.env.example` to `.env` and configure it:
    ```bash
