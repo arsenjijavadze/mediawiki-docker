@@ -18,7 +18,7 @@ mediawiki-docker/
 ```
 --
 
-## 🚀 Quick Start
+## Quick Start
 
 1. Copy `.env.example` to `.env` and configure it:
    ```bash
@@ -59,6 +59,4 @@ Recommended for personal or development use
 
 
 MIT License © 2025 Arsen Jijavadze
-```
-```
-```
+
